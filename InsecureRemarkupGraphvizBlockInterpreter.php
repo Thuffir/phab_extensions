@@ -24,9 +24,15 @@ final class InsecureRemarkupGraphvizBlockInterpreter
           'dot'));
     }
 
+    $engine = idx($argv, 'engine');
+    $engine = phutil_utf8_strtolower($engine);
+    if (empty($engine)) {
+      $engine = 'dot';
+    }
+
     $width = $this->parseDimension(idx($argv, 'width'));
 
-    $future = id(new ExecFuture('dot -T%s', 'png'))
+    $future = id(new ExecFuture('dot -T%s -K%s', 'png', $engine))
       ->setTimeout(15)
       ->write(trim($content));
 
