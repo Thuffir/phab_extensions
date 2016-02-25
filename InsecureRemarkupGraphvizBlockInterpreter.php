@@ -41,11 +41,14 @@ final class InsecureRemarkupGraphvizBlockInterpreter
           $stderr));
     }
 
-    $file = PhabricatorFile::buildFromFileDataOrHash(
+    $unguarded = AphrontWriteGuard::beginScopedUnguardedWrites();
+    $file = PhabricatorFile::newFromFileData(
       $stdout,
       array(
         'name' => 'graphviz.png',
+        'ttl' => time() + (60 * 60 * 24 * 31),
       ));
+    unset($unguarded);
 
     if ($this->getEngine()->isTextMode()) {
       return '<'.$file->getBestURI().'>';
