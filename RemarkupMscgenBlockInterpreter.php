@@ -37,7 +37,7 @@ final class RemarkupMscgenBlockInterpreter
       $stdout,
       array(
         'name' => 'mscgen.png',
-        'ttl' => time() + (60 * 60 * 24 * 31),
+        'ttl.relative' => (60 * 60 * 24 * 31),
       ));
     unset($unguarded);
 
